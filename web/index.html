@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RDR2 · Mapa de progreso</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23a53226'/%3E%3Ctext x='32' y='44' font-size='30' font-family='Georgia' text-anchor='middle' fill='%23f2e7cc'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="map" aria-label="Mapa de Red Dead Redemption 2"></div>
+
+<header id="topbar">
+  <div class="brand">
+    <div class="brand-mark">RDR<span>2</span></div>
+    <div class="brand-text">
+      <h1 data-i18n="mapTitle">Mapa de progreso</h1>
+      <div class="overall-row">
+        <div class="overall"><i id="overall-bar"></i></div>
+        <span id="overall-text">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-picker">
+    <label for="save-select" data-i18n="saveLabel">Partida</label>
+    <select id="save-select"></select>
+    <div id="save-meta" class="muted"></div>
+  </div>
+
+  <div class="search">
+    <input id="search-input" type="search" placeholder="Buscar marcador…"
+           data-i18n-ph="searchPlaceholder" aria-label="Buscar marcador"
+           data-i18n-aria="searchPlaceholder"
+           autocomplete="off" spellcheck="false">
+    <div id="search-results" class="hidden"></div>
+  </div>
+
+  <div class="prefs">
+    <div id="lang-switch" class="lang-switch" role="group" aria-label="Idioma"
+         data-i18n-aria="langLabel">
+      <button type="button" data-lang="es" title="Español">ES</button>
+      <button type="button" data-lang="en" title="English">EN</button>
+    </div>
+    <label class="fs-pick" for="font-select" title="Tamaño del texto"
+           data-i18n-title="fontLabel">
+      <span class="fs-icon" aria-hidden="true">Aa</span>
+      <select id="font-select" aria-label="Tamaño del texto"
+              data-i18n-aria="fontLabel"></select>
+    </label>
+  </div>
+</header>
+
+<aside id="sidebar">
+  <div class="side-head">
+    <div class="tabs" role="tablist">
+      <button data-mode="all" class="active" data-i18n="tabAll">Todos</button>
+      <button data-mode="pending" data-i18n="tabPending">Pendientes</button>
+      <button data-mode="done" data-i18n="tabDone">Hechos</button>
+    </div>
+  </div>
+  <div id="groups"></div>
+  <div class="side-foot">
+    <div id="live-badge" class="live off"><span class="dot"></span><span id="live-text" data-i18n="liveOffline">En vivo: sin conexión</span></div>
+    <label class="chk"><input type="checkbox" id="follow"> <span data-i18n="follow">Seguir al jugador</span></label>
+    <label class="chk"><input type="checkbox" id="proximity"> <span data-i18n="proximity">Marcado automático al pasar cerca</span></label>
+    <div class="io-row">
+      <button type="button" id="export-progress" title="Descargar el progreso de esta partida en JSON"
+              data-i18n="exportBtn" data-i18n-title="exportTitle">Exportar</button>
+      <button type="button" id="import-progress" title="Importar marcadores hechos desde un JSON"
+              data-i18n="importBtn" data-i18n-title="importTitle">Importar</button>
+      <input type="file" id="import-file" accept="application/json,.json" hidden>
+    </div>
+    <div class="hint" data-i18n-html="hintHtml">El progreso se guarda por partida en <code>progress/</code>. Los datos del save (nombre, % y fecha) se leen del propio archivo.</div>
+  </div>
+</aside>
+
+<button id="sidebar-toggle" title="Mostrar u ocultar el panel">«</button>
+
+<div id="zoomctl">
+  <button id="zoom-in" title="Acercar" data-i18n-title="zoomIn">+</button>
+  <button id="zoom-out" title="Alejar" data-i18n-title="zoomOut">−</button>
+  <button id="locate" title="Ir a mi posición" data-i18n-title="locate">◎</button>
+</div>
+
+<div id="attrib" data-i18n="attrib">Mapa © Rockstar Games · tiles RDR2Map · uso personal</div>
+<div id="toast"></div>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <div id="loading-text" data-i18n="loadingMap">Cargando mapa…</div>
+</div>
+
+<script src="/vendor/leaflet/leaflet.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
